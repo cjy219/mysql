@@ -1,0 +1,410 @@
+Microsoft Windows [版本 10.0.17134.376]
+(c) 2018 Microsoft Corporation。保留所有权利。
+
+C:\WINDOWS\system32>mysql -u root -p
+Enter password: *************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| aaa                |
+| hjmjdyjy100        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| shopping           |
+| sys                |
+| wo                 |
+| 我                 |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> use aaa;
+Database changed
+mysql> show tables;
++---------------+
+| Tables_in_aaa |
++---------------+
+| countries     |
+| departments   |
+| employees     |
+| job_history   |
+| jobs          |
+| locations     |
+| regions       |
++---------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from countries;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| AR         | Argentina                | 2         |
+| AU         | Australia                | 3         |
+| BE         | Belgium                  | 1         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| CH         | Switzerland              | 1         |
+| CN         | China                    | 3         |
+| DE         | Germany                  | 1         |
+| DK         | Denmark                  | 1         |
+| EG         | Egypt                    | 4         |
+| FR         | France                   | 1         |
+| IL         | Israel                   | 4         |
+| IN         | India                    | 3         |
+| IT         | Italy                    | 1         |
+| JP         | Japan                    | 3         |
+| KW         | Kuwait                   | 4         |
+| ML         | Malaysia                 | 3         |
+| MX         | Mexico                   | 2         |
+| NG         | Nigeria                  | 4         |
+| NL         | Netherlands              | 1         |
+| SG         | Singapore                | 3         |
+| UK         | United Kingdom           | 1         |
+| US         | United States of America | 2         |
+| ZM         | Zambia                   | 4         |
+| ZW         | Zimbabwe                 | 4         |
++------------+--------------------------+-----------+
+25 rows in set (0.00 sec)
+
+mysql> select distinct REGION_ID from countries;
++-----------+
+| REGION_ID |
++-----------+
+| 2         |
+| 3         |
+| 1         |
+| 4         |
++-----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from countries where REGION_ID=2;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| AR         | Argentina                | 2         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| MX         | Mexico                   | 2         |
+| US         | United States of America | 2         |
++------------+--------------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from countries order by COUNTRY_NAME,REGION_ID desc;
++------------+--------------------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME             | REGION_ID |
++------------+--------------------------+-----------+
+| AR         | Argentina                | 2         |
+| AU         | Australia                | 3         |
+| BE         | Belgium                  | 1         |
+| BR         | Brazil                   | 2         |
+| CA         | Canada                   | 2         |
+| CN         | China                    | 3         |
+| DK         | Denmark                  | 1         |
+| EG         | Egypt                    | 4         |
+| FR         | France                   | 1         |
+| DE         | Germany                  | 1         |
+| IN         | India                    | 3         |
+| IL         | Israel                   | 4         |
+| IT         | Italy                    | 1         |
+| JP         | Japan                    | 3         |
+| KW         | Kuwait                   | 4         |
+| ML         | Malaysia                 | 3         |
+| MX         | Mexico                   | 2         |
+| NL         | Netherlands              | 1         |
+| NG         | Nigeria                  | 4         |
+| SG         | Singapore                | 3         |
+| CH         | Switzerland              | 1         |
+| UK         | United Kingdom           | 1         |
+| US         | United States of America | 2         |
+| ZM         | Zambia                   | 4         |
+| ZW         | Zimbabwe                 | 4         |
++------------+--------------------------+-----------+
+25 rows in set (0.00 sec)
+
+mysql> select * from countries order by COUNTRY_NAME limit 1,3;
++------------+--------------+-----------+
+| COUNTRY_ID | COUNTRY_NAME | REGION_ID |
++------------+--------------+-----------+
+| AU         | Australia    | 3         |
+| BE         | Belgium      | 1         |
+| BR         | Brazil       | 2         |
++------------+--------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select sum(REGION_ID) from countries;
++----------------+
+| sum(REGION_ID) |
++----------------+
+|             60 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(COUNTRY_ID),sum(REGION_ID) from countries;
++-----------------+----------------+
+| sum(COUNTRY_ID) | sum(REGION_ID) |
++-----------------+----------------+
+|               0 |             60 |
++-----------------+----------------+
+1 row in set, 25 warnings (0.00 sec)
+
+mysql> select REGION_ID,sum(REGION_ID) from countries group by REGION_ID;
++-----------+----------------+
+| REGION_ID | sum(REGION_ID) |
++-----------+----------------+
+| 2         |             10 |
+| 3         |             18 |
+| 1         |              8 |
+| 4         |             24 |
++-----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from jobs;
++------------+---------------------------------+------------+------------+
+| JOB_ID     | JOB_TITLE                       | MIN_SALARY | MAX_SALARY |
++------------+---------------------------------+------------+------------+
+| AD_PRES    | President                       | 20080      | 40000      |
+| AD_VP      | Administration Vice President   | 15000      | 30000      |
+| AD_ASST    | Administration Assistant        | 3000       | 6000       |
+| FI_MGR     | Finance Manager                 | 8200       | 16000      |
+| FI_ACCOUNT | Accountant                      | 4200       | 9000       |
+| AC_MGR     | Accounting Manager              | 8200       | 16000      |
+| AC_ACCOUNT | Public Accountant               | 4200       | 9000       |
+| SA_MAN     | Sales Manager                   | 10000      | 20080      |
+| SA_REP     | Sales Representative            | 6000       | 12008      |
+| PU_MAN     | Purchasing Manager              | 8000       | 15000      |
+| PU_CLERK   | Purchasing Clerk                | 2500       | 5500       |
+| ST_MAN     | Stock Manager                   | 5500       | 8500       |
+| ST_CLERK   | Stock Clerk                     | 2008       | 5000       |
+| SH_CLERK   | Shipping Clerk                  | 2500       | 5500       |
+| IT_PROG    | Programmer                      | 4000       | 10000      |
+| MK_MAN     | Marketing Manager               | 9000       | 15000      |
+| MK_REP     | Marketing Representative        | 4000       | 9000       |
+| HR_REP     | Human Resources Representative  | 4000       | 9000       |
+| PR_REP     | Public Relations Representative | 4500       | 10500      |
++------------+---------------------------------+------------+------------+
+19 rows in set (0.00 sec)
+
+mysql> select * from locations;
++-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+| LOCATION_ID | STREET_ADDRESS                           | POSTAL_CODE | CITY                | STATE_PROVINCE    | COUNTRY_ID |
++-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+| 1000        | 1297 Via Cola di Rie                     | 00989       | Roma                |                   | IT         |
+| 1100        | 93091 Calle della Testa                  | 10934       | Venice              |                   | IT         |
+| 1200        | 2017 Shinjuku-ku                         | 1689        | Tokyo               | Tokyo Prefecture  | JP         |
+| 1300        | 9450 Kamiya-cho                          | 6823        | Hiroshima           |                   | JP         |
+| 1400        | 2014 Jabberwocky Rd                      | 26192       | Southlake           | Texas             | US         |
+| 1500        | 2011 Interiors Blvd                      | 99236       | South San Francisco | California        | US         |
+| 1600        | 2007 Zagora St                           | 50090       | South Brunswick     | New Jersey        | US         |
+| 1700        | 2004 Charade Rd                          | 98199       | Seattle             | Washington        | US         |
+| 1800        | 147 Spadina Ave                          | M5V 2L7     | Toronto             | Ontario           | CA         |
+| 1900        | 6092 Boxwood St                          | YSW 9T2     | Whitehorse          | Yukon             | CA         |
+| 2000        | 40-5-12 Laogianggen                      | 190518      | Beijing             |                   | CN         |
+| 2100        | 1298 Vileparle (E)                       | 490231      | Bombay              | Maharashtra       | IN         |
+| 2200        | 12-98 Victoria Street                    | 2901        | Sydney              | New South Wales   | AU         |
+| 2300        | 198 Clementi North                       | 540198      | Singapore           |                   | SG         |
+| 2400        | 8204 Arthur St                           |             | London              |                   | UK         |
+| 2500        | Magdalen Centre, The Oxford Science Park | OX9 9ZB     | Oxford              | Oxford            | UK         |
+| 2600        | 9702 Chester Road                        | 09629850293 | Stretford           | Manchester        | UK         |
+| 2700        | Schwanthalerstr. 7031                    | 80925       | Munich              | Bavaria           | DE         |
+| 2800        | Rua Frei Caneca 1360                     | 01307-002   | Sao Paulo           | Sao Paulo         | BR         |
+| 2900        | 20 Rue des Corps-Saints                  | 1730        | Geneva              | Geneve            | CH         |
+| 3000        | Murtenstrasse 921                        | 3095        | Bern                | BE                | CH         |
+| 3100        | Pieter Breughelstraat 837                | 3029SK      | Utrecht             | Utrecht           | NL         |
+| 3200        | Mariano Escobedo 9991                    | 11932       | Mexico City         | Distrito Federal, | MX         |
++-------------+------------------------------------------+-------------+---------------------+-------------------+------------+
+23 rows in set (0.00 sec)
+
+mysql> select MIN_SALARY,LOCATION_ID from jobs,locations where jobs.MIN_SALARY=locations.LOCATION_ID;
++------------+-------------+
+| MIN_SALARY | LOCATION_ID |
++------------+-------------+
+| 2500       | 2500        |
+| 2500       | 2500        |
+| 3000       | 3000        |
++------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select MIN_SALARY,LOCATION_ID from jobs left join locations on jobs.MIN_SALARY=locations.LOCATION_ID;
++------------+-------------+
+| MIN_SALARY | LOCATION_ID |
++------------+-------------+
+| 2500       | 2500        |
+| 2500       | 2500        |
+| 3000       | 3000        |
+| 20080      | NULL        |
+| 15000      | NULL        |
+| 8200       | NULL        |
+| 4200       | NULL        |
+| 8200       | NULL        |
+| 4200       | NULL        |
+| 10000      | NULL        |
+| 6000       | NULL        |
+| 8000       | NULL        |
+| 5500       | NULL        |
+| 2008       | NULL        |
+| 4000       | NULL        |
+| 9000       | NULL        |
+| 4000       | NULL        |
+| 4000       | NULL        |
+| 4500       | NULL        |
++------------+-------------+
+19 rows in set (0.00 sec)
+
+mysql> select MIN_SALARY,LOCATION_ID from jobs  join locations on jobs.MIN_SALARY=locations.LOCATION_ID;
++------------+-------------+
+| MIN_SALARY | LOCATION_ID |
++------------+-------------+
+| 2500       | 2500        |
+| 2500       | 2500        |
+| 3000       | 3000        |
++------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from jobs where jobs.MIN_SALARY in(select LOCATION_ID from locations);
++----------+--------------------------+------------+------------+
+| JOB_ID   | JOB_TITLE                | MIN_SALARY | MAX_SALARY |
++----------+--------------------------+------------+------------+
+| AD_ASST  | Administration Assistant | 3000       | 6000       |
+| PU_CLERK | Purchasing Clerk         | 2500       | 5500       |
+| SH_CLERK | Shipping Clerk           | 2500       | 5500       |
++----------+--------------------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select MIN_SALARY from jobs union all select LOCATION_ID from locations;
++------------+
+| MIN_SALARY |
++------------+
+| 20080      |
+| 15000      |
+| 3000       |
+| 8200       |
+| 4200       |
+| 8200       |
+| 4200       |
+| 10000      |
+| 6000       |
+| 8000       |
+| 2500       |
+| 5500       |
+| 2008       |
+| 2500       |
+| 4000       |
+| 9000       |
+| 4000       |
+| 4000       |
+| 4500       |
+| 1000       |
+| 1100       |
+| 1200       |
+| 1300       |
+| 1400       |
+| 1500       |
+| 1600       |
+| 1700       |
+| 1800       |
+| 1900       |
+| 2000       |
+| 2100       |
+| 2200       |
+| 2300       |
+| 2400       |
+| 2500       |
+| 2600       |
+| 2700       |
+| 2800       |
+| 2900       |
+| 3000       |
+| 3100       |
+| 3200       |
++------------+
+42 rows in set (0.00 sec)
+
+mysql> select * from jobs where not exists (select MIN_SALARY from locations where MIN_SALARY=0);
++------------+---------------------------------+------------+------------+
+| JOB_ID     | JOB_TITLE                       | MIN_SALARY | MAX_SALARY |
++------------+---------------------------------+------------+------------+
+| AD_PRES    | President                       | 20080      | 40000      |
+| AD_VP      | Administration Vice President   | 15000      | 30000      |
+| AD_ASST    | Administration Assistant        | 3000       | 6000       |
+| FI_MGR     | Finance Manager                 | 8200       | 16000      |
+| FI_ACCOUNT | Accountant                      | 4200       | 9000       |
+| AC_MGR     | Accounting Manager              | 8200       | 16000      |
+| AC_ACCOUNT | Public Accountant               | 4200       | 9000       |
+| SA_MAN     | Sales Manager                   | 10000      | 20080      |
+| SA_REP     | Sales Representative            | 6000       | 12008      |
+| PU_MAN     | Purchasing Manager              | 8000       | 15000      |
+| PU_CLERK   | Purchasing Clerk                | 2500       | 5500       |
+| ST_MAN     | Stock Manager                   | 5500       | 8500       |
+| ST_CLERK   | Stock Clerk                     | 2008       | 5000       |
+| SH_CLERK   | Shipping Clerk                  | 2500       | 5500       |
+| IT_PROG    | Programmer                      | 4000       | 10000      |
+| MK_MAN     | Marketing Manager               | 9000       | 15000      |
+| MK_REP     | Marketing Representative        | 4000       | 9000       |
+| HR_REP     | Human Resources Representative  | 4000       | 9000       |
+| PR_REP     | Public Relations Representative | 4500       | 10500      |
++------------+---------------------------------+------------+------------+
+19 rows in set (0.01 sec)
+
+mysql> select MIN_SALARY from jobs union all select LOCATION_ID from locations;
++------------+
+| MIN_SALARY |
++------------+
+| 20080      |
+| 15000      |
+| 3000       |
+| 8200       |
+| 4200       |
+| 8200       |
+| 4200       |
+| 10000      |
+| 6000       |
+| 8000       |
+| 2500       |
+| 5500       |
+| 2008       |
+| 2500       |
+| 4000       |
+| 9000       |
+| 4000       |
+| 4000       |
+| 4500       |
+| 1000       |
+| 1100       |
+| 1200       |
+| 1300       |
+| 1400       |
+| 1500       |
+| 1600       |
+| 1700       |
+| 1800       |
+| 1900       |
+| 2000       |
+| 2100       |
+| 2200       |
+| 2300       |
+| 2400       |
+| 2500       |
+| 2600       |
+| 2700       |
+| 2800       |
+| 2900       |
+| 3000       |
+| 3100       |
+| 3200       |
++------------+
+42 rows in set (0.00 sec)
+
+mysql>
