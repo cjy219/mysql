@@ -1,0 +1,46 @@
+mysql> use bbb;
+Database changed
+mysql> create table movies(
+    -> id int auto_increment primary key not null,
+    -> name varchar(20) not null,
+    -> type varchar(20)not null,
+    -> year varchar(20),
+    -> dir varchar(20),
+    -> grade varchar(20));
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> insert into movies(
+    -> id,name,type,year,dir,grade) values(1,'mofang','xiju','2017','a','8.7');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from movies where name='mofang';
++----+--------+------+------+------+-------+
+| id | name   | type | year | dir  | grade |
++----+--------+------+------+------+-------+
+|  1 | mofang | xiju | 2017 | a    | 8.7   |
++----+--------+------+------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from movies where year='2017';
++----+--------+------+------+------+-------+
+| id | name   | type | year | dir  | grade |
++----+--------+------+------+------+-------+
+|  1 | mofang | xiju | 2017 | a    | 8.7   |
++----+--------+------+------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from movies where dir='a';
++----+--------+------+------+------+-------+
+| id | name   | type | year | dir  | grade |
++----+--------+------+------+------+-------+
+|  1 | mofang | xiju | 2017 | a    | 8.7   |
++----+--------+------+------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from movies where grade='8.7';
++----+--------+------+------+------+-------+
+| id | name   | type | year | dir  | grade |
++----+--------+------+------+------+-------+
+|  1 | mofang | xiju | 2017 | a    | 8.7   |
++----+--------+------+------+------+-------+
+1 row in set (0.00 sec)
