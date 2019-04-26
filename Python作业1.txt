@@ -1,0 +1,4 @@
+radius1 = eval(input('请输入底：'))
+radius2 = eval(input('请输入高：'))
+area = radius1 * radius2 * (1/2)
+print('三角形的面积为:',area)
